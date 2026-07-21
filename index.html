@@ -212,6 +212,14 @@
 .cart-total { margin-top: 20px; font-weight: bold; border-top: 1px solid #333; padding-top: 10px; }
 .checkout-btn { background-color: #ffffff; color: #000000; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background 0.3s; }
 .checkout-btn:hover { background-color: #dddddd; }
+    @keyframes blink-purple {
+      0% { color: #ffffff; }
+      50% { color: #ba68c8; }
+      100% { color: #ffffff; }
+    }
+    .blink-effect {
+      animation: blink-purple 1s ease-in-out;
+    }
   </style>
 </head>
 <body>
@@ -560,6 +568,9 @@ function addToCart(name, price) {
   const totalQty = cart.reduce((acc, item) => acc + item.quantity, 0);
   badge.innerText = totalQty;
   badge.style.display = 'flex';
+  badge.classList.remove('blink-effect');
+  void badge.offsetWidth;
+  badge.classList.add('blink-effect');
   renderCart();
 }
 function renderCart() {
@@ -593,6 +604,9 @@ function changeQuantity(index, delta) {
   const badge = document.getElementById('cart-badge');
   badge.innerText = totalQty;
   if (totalQty === 0) badge.style.display = 'none';
+  badge.classList.remove('blink-effect');
+  void badge.offsetWidth;
+  badge.classList.add('blink-effect');
   renderCart();
 }
 function handleCheckout() {
