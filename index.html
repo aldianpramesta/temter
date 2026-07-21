@@ -220,6 +220,14 @@
     .blink-effect {
       animation: blink-wood 1s ease-in-out;
     }
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-spinner {
+  -moz-appearance: textfield;
+}
   </style>
 </head>
 <body>
@@ -590,9 +598,9 @@ function renderCart() {
             <div style="font-size:12px; color:#aaa;">Rp${item.price.toLocaleString()} x ${item.quantity} = Rp${(item.price * item.quantity).toLocaleString()}</div>
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
-            <button onclick="changeQuantity(${index}, -1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 12px; font-size: 18px; font-weight: bold;">-</button>
-            ${item.quantity}
-            <button onclick="changeQuantity(${index}, 1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 12px; font-size: 18px; font-weight: bold;">+</button>
+            <button onclick="changeQuantity(${index}, -1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 10px; font-size: 18px; font-weight: bold;">-</button>
+            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantityFromInput(${index}, this.value)" class="no-spinner" style="width: 40px; background: #222; color: white; border: 1px solid #333; text-align: center; border-radius: 4px;">
+            <button onclick="changeQuantity(${index}, 1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 10px; font-size: 18px; font-weight: bold;">+</button>
         </div>
       </div>`;
   });
@@ -610,6 +618,19 @@ function changeQuantity(index, delta) {
   badge.classList.remove('blink-effect');
   void badge.offsetWidth;
   badge.classList.add('blink-effect');
+  renderCart();
+}
+function updateQuantityFromInput(index, value) {
+  const newVal = parseInt(value);
+  if (isNaN(newVal) || newVal <= 0) {
+    cart.splice(index, 1);
+  } else {
+    cart[index].quantity = newVal;
+  }
+  const totalQty = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const badge = document.getElementById('cart-badge');
+  badge.innerText = totalQty;
+  badge.style.display = totalQty > 0 ? 'flex' : 'none';
   renderCart();
 }
 function handleCheckout() {
