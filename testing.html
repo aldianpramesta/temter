@@ -604,7 +604,7 @@ function handleCheckout() {
     message += "- " + item.name + " (" + item.quantity + ") - Rp" + (item.price * item.quantity).toLocaleString() + "\n";
   });
   message += "\nTotal: Rp" + total.toLocaleString();
-  const url = "https://wa.me/6287880947390?text=" + encodeURIComponent(message);
+  const url = "https://wa.me/?text=" + encodeURIComponent(message);
   window.open(url, '_blank');
 }
   </script>
