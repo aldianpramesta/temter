@@ -596,8 +596,8 @@ function changeQuantity(index, delta) {
   renderCart();
 }
 function handleCheckout() {
-  const date = new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-  let message = "Halo saya ingin checkout\n\nTanggal: " + date + "\n\nPesanan:\n";
+  const date = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+  let message = "\n\nTanggal: " + date + "\n\nPesanan:\n";
   let total = 0;
   cart.forEach(item => {
     total += (item.price * item.quantity);
