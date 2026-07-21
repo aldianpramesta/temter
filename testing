@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
+
+  <script>
+  function showOptions() {
+    document.getElementById('options').style.display = 'block';
+  }
+  </script>
+
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+    }
+
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+    /* ========== Animasi Global ========== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 20px;
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Section 5 - Pricing Cards */
+    .section-5 {
+      height: auto; /* Diubah jadi otomatis mengikuti isi barang */
+      padding: 60px 16px; /* Ditambah sedikit jarak atasnya biar gak nempel branding */
+      display: flex;
+      justify-content: flex-start; /* Dimulai normal dari atas ke bawah */
+      align-items: center;
+    }
+    
+    .pricing-wrapper {
+        display: flex;
+        gap: 12px 24px;
+        width: 100%;
+        max-width: 1200px;
+        justify-content: space-between; 
+        flex-wrap: wrap;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 24px; /* <- Ubah ukuran semua teks produk di sini */
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+    
+    .product-image-container {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .product-image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .pricing-card {
+      background-color: #111111;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .harga-durasi {
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+      margin-bottom: 45px;
+    }
+
+    .harga-durasi .harga {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 10px;
+      color: #808080;
+    }
+
+    .harga-durasi .durasi {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      line-height: 15px;
+      color: #808080;
+    }
+
+    /* Styling untuk Tombol Halaman (Pagination) */
+    .pagination-wrapper-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .page-btn {
+      background-color: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .page-btn.active {
+      background-color: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    .page-btn:hover:not(.active) {
+      background-color: #222222;
+      border-color: #555555;
+    }
+
+    /* ================= TAMPILAN KHUSUS HP (RESPONSIF) ================= */
+    @media (max-width: 768px) {
+        .pricing-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 8px;
+            padding: 0 4px;
+        }
+
+        .pricing-card {
+            height: auto;
+            padding: 8px 8px 20px 8px;
+            border-radius: 8px;
+        }
+
+        .product-image-container {
+            height: 80px; 
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 14px;
+            line-height: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .harga-durasi {
+            margin-bottom: 0px;
+        }
+
+        .harga-durasi .harga {
+            font-size: 13px;
+        }
+    }
+    /* ========== STYLING KERANJANG & MODAL ========== */
+    .cart-floating-btn { position: fixed; bottom: 20px; right: 20px; background-color: #ffffff; color: #000000; padding: 12px 20px; border-radius: 30px; font-weight: 700; font-size: 15px; border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2); z-index: 99; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; }
+    .cart-floating-btn:hover { transform: scale(1.05); }
+    .btn-add-cart { width: 100%; margin-top: 10px; background-color: #ffffff; color: #000000; border: none; padding: 8px; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; transition: background 0.2s; }
+    .btn-add-cart:hover { background-color: #dddddd; }
+    .cart-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); z-index: 100; justify-content: center; align-items: center; padding: 16px; box-sizing: border-box; }
+    .cart-content { background-color: #111111; border: 1px solid #333333; border-radius: 12px; width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; padding: 20px; color: #ffffff; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); }
+    .cart-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333333; padding-bottom: 12px; margin-bottom: 15px; }
+    .cart-header h3 { margin: 0; font-size: 18px; }
+    .close-cart-btn { background: none; border: none; color: #888888; font-size: 24px; cursor: pointer; }
+    .close-cart-btn:hover { color: #ffffff; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222222; }
+    .cart-item-info { flex: 1; padding-right: 10px; }
+    .cart-item-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .cart-item-price { font-size: 12px; color: #888888; }
+    .cart-qty-control { display: flex; align-items: center; gap: 8px; }
+    .btn-qty { background: #222222; color: #ffffff; border: 1px solid #444444; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .cart-total-box { display: flex; justify-content: space-between; font-size: 16px; font-weight: bold; padding: 15px 0; border-top: 2px solid #333333; margin-top: 15px; }
+    .instruction-box { background-color: #1a1a1a; border: 1px dashed #555555; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 12px; color: #cccccc; line-height: 1.4; }
+    .cart-actions { display: flex; flex-direction: column; gap: 8px; }
+    .btn-wa { background-color: #25D366; color: #ffffff; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; text-align: center; }
+    .btn-copy { background-color: #333333; color: #ffffff; border: 1px solid #555555; padding: 10px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      A <span class="temter">TEMTER</span>
+    </div>
+  </section>
+
+  <!-- Section 5: Pricing / Katalog Produk -->
+  <style>
+    /* Styling khusus untuk Search Bar & Tombol Hapus */
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .search-bar {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      background-color: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-bar:focus {
+      border-color: #ffffff;
+    }
+    .clear-search-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #555555;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      display: none;
+      transition: color 0.2s;
+    }
+    .clear-search-btn:hover {
+      color: #ffffff;
+    }
+
+    /* Styling khusus untuk Tombol Pilihan Kategori */
+    .category-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .category-btn {
+      background: none;
+      color: #666666;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 12px;
+      border-radius: 0;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.2s ease;
+    }
+    .category-btn.active {
+      color: #ffffff;
+      border-bottom: 2px solid #ffffff;
+    }
+    .category-btn:hover:not(.active) {
+      color: #bbbbbb;
+    }
+    .sort-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .sort-select {
+      background-color: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+    }
+.sort-wrapper { position: relative; display: flex; justify-content: center; margin-bottom: 20px; } .sort-main-btn { background: #111; color: #fff; border: 1px solid #333; padding: 8px 16px; border-radius: 8px; cursor: pointer; } .sort-menu { position: absolute; top: 100%; margin-top: 5px; background: #111; border: 1px solid #333; border-radius: 8px; z-index: 10; display: none; flex-direction: column; width: 160px; } .sort-option { background: none; border: none; color: #888; padding: 10px; cursor: pointer; text-align: left; } .sort-option:hover { background: #222; } .sort-option.active { color: #fff; }
+.home-btn { background: #111; color: #fff; border: 1px solid #333; padding: 8px; border-radius: 8px; cursor: pointer; margin-right: 10px; display: flex; align-items: center; justify-content: center; } .home-btn:hover { background: #222; }
+  </style>
+
+  <section class="section-5">
+    <!-- Input Search Bar -->
+    <div class="search-wrapper">
+      <input type="text" id="search-input" placeholder="Ketik yang diperlukan di sini..." class="search-bar">
+      <button id="clear-search" class="clear-search-btn">&times;</button>
+    </div>
+
+    <!-- Wadah Tombol Kategori Otomatis -->
+    <div id="category-container" class="category-wrapper"></div>
+
+    <!-- Dropdown Urutan Harga -->
+<div class="sort-wrapper"><button class="home-btn" onclick="goHome()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button><button class="sort-main-btn" onclick="toggleSortMenu()">Sorting ▼</button><div id="sort-menu" class="sort-menu"><button class="sort-option active" onclick="setSort('asc')">Harga Termurah</button><button class="sort-option" onclick="setSort('desc')">Harga Tertinggi</button></div></div>
+
+    <!-- Wadah Produk -->
+    <div class="pricing-wrapper" id="tempat-produk"></div>
+    
+    <!-- Wadah Tombol Halaman (1 2 3) -->
+    <div id="pagination-container" class="pagination-wrapper-buttons"></div>
+  </section>
+
+  <script>
+    // 1. DATA PRODUK + KATEGORI
+    const daftarProduk = [
+  { name: "DETERJEN BUBUK RINSO 1440G", price: "Rp33.500", img: "images/products/deterjen pembersih pakaian/rinso deterjen bubuk.webp", category: "Deterjen Pembersih Pakaian" },
+  { name: "DETERJEN CAIR SOKLIN 1.6L", price: "Rp35,000", img: "images/products/deterjen pembersih pakaian/soklin deterjen cair.webp", category: "Deterjen Pembersih Pakaian" },
+  { name: "DETERJEN CAIR SOKLIN 700ML", price: "Rp17.500", img: "images/products/deterjen pembersih pakaian/soklin deterjen cair.webp", category: "Deterjen Pembersih Pakaian" },
+  { name: "SABUN CUCI PIRING MAMA LEMON 690ML", price: "Rp10.000", img: "images/products/sabun cuci piring/mama lemon 690ml sabun cuci piring.webp", category: "Sabun Cuci Piring" },
+  { name: "SABUN CUCI PIRING MAMA LEMON 950ML", price: "Rp14.000", img: "images/products/sabun cuci piring/mama lemon 950ml sabun cuci piring.webp", category: "Sabun Cuci Piring" },
+  { name: "SABUN CUCI PIRING SUNLIGHT 910ML", price: "Rp14.500", img: "images/products/sabun cuci piring/sunlight sabun cuci piring.webp", category: "Sabun Cuci Piring" },
+  { name: "SABUN MANDI BIORE 800ML", price: "Rp39.000", img: "images/products/sabun mandi/biore sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI FRES 400ML", price: "Rp18.000", img: "images/products/sabun mandi/fres sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI GIV WHITE 800ML", price: "Rp31.500", img: "images/products/sabun mandi/giv white sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI K NATURAL 400ML", price: "Rp19.500", img: "images/products/sabun mandi/k natural sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI LUX BOTANICALS 400ML", price: "Rp21.500", img: "images/products/sabun mandi/lux botanicals sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI LUX BOTANICALS 800ML", price: "Rp41.000", img: "images/products/sabun mandi/lux botanicals sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "PASTA GIGI CIPTADENT MINT 225G", price: "Rp13.500", img: "images/products/pasta gigi/ciptadent mint pasta gigi.webp", category: "Pasta Gigi" },
+  { name: "PASTA GIGI PEPSODENT COMPLETE 8 150G", price: "Rp14.000", img: "images/products/pasta gigi/pepsodent complete pasta gigi.webp", category: "Pasta Gigi" },
+  { name: "PASTA GIGI PEPSODENT 2 X 225G", price: "Rp28.000", img: "images/products/pasta gigi/pepsodent pasta gigi.webp", category: "Pasta Gigi" },
+  { name: "SHAMPOO EMERON BLACK SHINE 170ML", price: "Rp19.500", img: "images/products/shampoo/emeron black shine shampoo.webp", category: "Shampoo" },
+  { name: "DEODORAN POSH ROLL ON 50ML", price: "Rp16.500", img: "images/products/deodorant/posh roll on deodoran.webp", category: "Deodorant" },
+  { name: "SABUN WAJAH GLOW & LOVELY 50ML", price: "Rp21.000", img: "images/products/sabun wajah/glow & lovely sabun cuci wajah.webp", category: "Sabun Wajah" },
+  { name: "SABUN WAJAH GLOW & LOVELY 100ML", price: "Rp34.400", img: "images/products/sabun wajah/glow & lovely sabun cuci wajah.webp", category: "Sabun Wajah" },
+  { name: "KETUMBAR BUBUK DESAKU 5 X 12.5G", price: "Rp5000", img: "images/products/bumbu dapur/desaku ketumbar bubuk.webp", category: "Bumbu Dapur" },
+  { name: "MERICA BUBUK LADAKU 5 X 2.5G", price: "Rp5000", img: "images/products/bumbu dapur/ladaku merica bubuk.webp", category: "Bumbu Dapur" },
+  { name: "BUMBU KALDU ROYCO RASA AYAM 94G", price: "Rp5000", img: "images/products/bumbu dapur/royco rasa ayam bumbu kaldu 94g.webp", category: "Bumbu Dapur" },
+  { name: "BUMBU KALDU ROYCO RASA SAPI 10 X 8G", price: "Rp5000", img: "images/products/bumbu dapur/royco rasa sapi saset bumbu kaldu.webp", category: "Bumbu Dapur" },
+  { name: "OBAT NYAMUK BAYGON BATANG ISI 5PCS", price: "Rp5000", img: "images/products/obat nyamuk/baygon batang pembasmi nyamuk.webp", category: "Obat Nyamuk" },
+  { name: "OBAT NYAMUK BAYGON 675ML", price: "Rp44.000", img: "images/products/obat nyamuk/baygon pembasmi nyamuk.webp", category: "Obat Nyamuk" },
+  { name: "KAPAS WAJAH MINISO ISI 1000PCS", price: "Rp29.000", img: "images/products/kapas pembersih wajah/miniso kapas wajah.webp", category: "Kapas Pembersih Wajah" },
+  { name: "KAPAS WAJAH SELECTION 35G", price: "Rp7000", img: "images/products/kapas pembersih wajah/selection kapas wajah.webp", category: "Kapas Pembersih Wajah" },
+  { name: "KOREK KUPING SELECTION ISI 100PCS", price: "Rp5000", img: "images/products/korek kuping/selection korek kuping.webp", category: "Korek Kuping" },
+  { name: "MICELLAR WATER VIVA COLLAGEN 100ML", price: "Rp21.500", img: "images/products/micellar water/viva collagen micellar water.webp", category: "Micellar Water" },
+  { name: "MIE INDOMIE AYAM BAWANG 5 x 69G", price: "Rp17.000", img: "images/products/mie/indomie ayam bawang mie.webp", category: "Mie" },
+  { name: "MIE INDOMIE GORENG AYAM GEPREK 5 x 85G", price: "Rp17.000", img: "images/products/mie/indomie goreng ayam geprek mie.webp", category: "Mie" },
+  { name: "MIE INDOMIE GORENG 5 x 85G", price: "Rp17.000", img: "images/products/mie/indomie goreng mie.webp", category: "Mie" },
+  { name: "MINYAK GORENG FILMA 2L", price: "Rp47.000", img: "images/products/minyak goreng/filma minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG FORTUNE 2L", price: "Rp46.000", img: "images/products/minyak goreng/fortune minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG KELAPA MAS 2L", price: "Rp46.000", img: "images/products/minyak goreng/kelapa mas minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG ROSE BRAND 1L", price: "Rp23.500", img: "images/products/minyak goreng/rose brand minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG SOVIA 2L", price: "Rp46.000", img: "images/products/minyak goreng/sovia minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG TROBOSS 2L", price: "Rp46.000", img: "images/products/minyak goreng/troboss minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG SUNCO 2L", price: "Rp47.000", img: "images/products/minyak goreng/minyak goreng sunco.webp", category: "Minyak Goreng" },
+  { name: "GULA PASIR ROSE BRAND 1KG", price: "Rp19.500", img: "images/products/gula/gula pasir rose brand.webp", category: "Gula" },
+  { name: "TEPUNG TERIGU SEGITIGA BIRU 1KG", price: "Rp14.000", img: "images/products/tepung/tepung terigu segitiga biru.webp", category: "Tepung" },
+  { name: "SABUN LANTAI SOKLIN 700ML", price: "Rp10.000", img: "images/products/sabun pembersih lantai/soklin lantai sabun lantai.webp", category: "Sabun Pembersih Lantai" },
+  { name: "SABUN LANTAI SUPER PELL APPLE 760ML", price: "Rp14.000", img: "images/products/sabun pembersih lantai/super pell apple sabun lantai.webp", category: "Sabun Pembersih Lantai" },
+  { name: "KECAP MANIS BANGO POUCH 700 ML", price: "Rp26.500", img: "images/products/kecap/kecap manis bango pouch.webp", category: "Kecap" },
+  { name: "KECAP MANIS BANGO BOTOL 385G", price: "Rp24.000", img: "images/products/kecap/kecap manis kecap bango botol.webp", category: "Kecap" },
+  { name: "KECAP MANIS BANGO BOTOL 189G", price: "Rp11.000", img: "images/products/kecap/kecap manis kecap bango botol.webp", category: "Kecap" },
+  { name: "SUPLEMEN KULIT SIDOMUNCUL VIT C1000 COLLAGEN MINUMAN SEDUH 6 X 4.5G", price: "Rp12.000", img: "images/products/supplement/sidomuncul vit c1000 collagen minuman seduh supplement kulit.webp", category: "Supplement" },
+  { name: "SUPLEMEN KULIT SIDOMUNCUL VIT C1000 MUSCAT GRAPE MINUMAN SEDUH 6 X 4.5G", price: "Rp12.000", img: "images/products/supplement/sidomuncul vit c1000 muscat grape minuman seduh supplement kulit.webp", category: "Supplement" },
+  { name: "BISKUIT TRICK BAKED CHIP ASIAN BBQ 4 X 15G", price: "Rp6000", img: "images/products/cemilan/trick baked chip asian bbq biskuit.webp", category: "Cemilan" },
+  { name: "KOPI GOOD DAY CAPUCCINO 10 X 25G", price: "Rp25.000", img: "images/products/kopi/good day capuccino kopi.webp", category: "Kopi" },
+  { name: "KOPI GOOD DAY MOCACINNO 10 X 20G", price: "Rp20.000", img: "images/products/kopi/good day mocacinno kopi.webp", category: "Kopi" },
+  { name: "KOPI KAPAL API MINI 20 X 6G", price: "Rp20.000", img: "images/products/kopi/kapal api mini kopi.webp", category: "Kopi" },
+  { name: "KOPI KAPAL API SPECIAL MIX 10 X 23G", price: "Rp20.000", img: "images/products/kopi/kapal api special mix kopi.webp", category: "Kopi" },
+  { name: "KOPI LUWAK WHITE KOFFIE 10 X 20G", price: "Rp20.000", img: "images/products/kopi/luwak white koffie kopi.webp", category: "Kopi" },
+  { name: "KOPI TOP COFFEE GULA AREN 9 X 22G", price: "Rp14.000", img: "images/products/kopi/top coffee gula aren kopi.webp", category: "Kopi" },
+  { name: "BODY LOTION EMERON LOVELY JEJU ORANGE 500ML", price: "Rp17.000", img: "images/products/body lotion/emeron lovely jeju orange body lotion.webp", category: "Body Lotion" },
+  { name: "SAUS CABE BELIBIS 135 ML", price: "Rp10.000", img: "images/products/saus/saus cabe belibis 135ml.webp", category: "Saus" },
+    ];
+
+    // 2. PENGATURAN AWAL
+    let currentPage = 1;      
+    let currentCategory = "Semua"; 
+    let currentSort = 'asc'; 
+    function parseHarga(hargaStr) {
+      return parseInt(hargaStr.replace(/[^0-9]/g, '')) || 0;
+    }
+    const itemsPerPage = window.innerWidth <= 768 ? 12 : 12;  
+
+    // Fungsi membuat tombol filter kategori secara otomatis dari data produk
+    function buatTombolKategori() {
+      const catContainer = document.getElementById('category-container');
+      const listKategori = ["Semua", ...new Set(daftarProduk.map(p => p.category).filter(Boolean))];
+      catContainer.innerHTML = ""; 
+
+      listKategori.forEach(kat => {
+        const button = document.createElement('button');
+        button.innerText = kat;
+        button.classList.add('category-btn');
+        
+        if (kat === currentCategory) button.classList.add('active');
+
+        button.addEventListener('click', () => {
+          currentCategory = kat;
+          currentPage = 1; 
+          document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          tampilkanProduk(currentPage);
+        });
+
+        catContainer.appendChild(button);
+      });
+    }
+
+    // Fungsi untuk menampilkan produk berdasarkan halaman, kata kunci pencarian, & kategori
+    function tampilkanProduk(page) {
+      const container = document.getElementById('tempat-produk');
+      container.innerHTML = ""; 
+
+      const kataKunci = document.getElementById('search-input').value.toLowerCase();
+
+      const produkDifilter = daftarProduk.filter(produk => {
+        const cocokKataKunci = produk.name.toLowerCase().includes(kataKunci);
+        const cocokKategori = (currentCategory === "Semua") || (produk.category === currentCategory);
+        return cocokKataKunci && cocokKategori;
+      });
+
+      // Proses sortir berdasarkan harga
+      produkDifilter.sort((a, b) => {
+        const hargaA = parseHarga(a.price);
+        const hargaB = parseHarga(b.price);
+        return currentSort === 'asc' ? hargaA - hargaB : hargaB - hargaA;
+      });
+
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = page * itemsPerPage;
+      const produkHalamanIni = produkDifilter.slice(startIndex, endIndex);
+
+      produkHalamanIni.forEach(produk => {
+        container.innerHTML += `
+          <div class="pricing-card">
+            <div class="product-image-container">
+              <img src="${produk.img}" alt="${produk.name}">
+            </div>
+            <div class="product-name">${produk.name}</div>
+            <div class="harga-durasi">
+              <span class="harga">${produk.price}</span>
+            </div>
+          </div>
+          <button class="btn-add-cart" onclick="tambahKeKeranjang('${produk.name}')">+ Keranjang</button>
+        `;
+      });
+
+      buatTombolNavigasi(produkDifilter.length);
+    }
+
+    // Fungsi membuat navigasi halaman angka otomatis
+    function buatTombolNavigasi(totalItems) {
+      const paginationContainer = document.getElementById('pagination-container');
+      paginationContainer.innerHTML = "";
+
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.innerText = i;
+        button.classList.add('page-btn');
+        
+        if (i === currentPage) button.classList.add('active');
+
+        button.addEventListener('click', () => {
+          currentPage = i;
+          tampilkanProduk(currentPage);
+          document.getElementById('tempat-produk').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        paginationContainer.appendChild(button);
+      }
+    }
+
+    // Kontrol Search Input
+    const searchInput = document.getElementById('search-input');
+    const clearSearchBtn = document.getElementById('clear-search');
+    let timerPencarian;
+
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.length > 0) {
+        clearSearchBtn.style.display = 'block';
+      } else {
+        clearSearchBtn.style.display = 'none';
+      }
+
+      clearTimeout(timerPencarian);
+      timerPencarian = setTimeout(() => {
+        currentPage = 1;
+        tampilkanProduk(currentPage);
+      }, 2000);
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = "";
+      clearSearchBtn.style.display = 'none';
+      currentPage = 1;
+      tampilkanProduk(currentPage);
+      searchInput.focus();
+    });
+
+    // JALANKAN SISTEM PERTAMA KALI
+    buatTombolKategori(); 
+    tampilkanProduk(currentPage);
+
+function toggleSortMenu() { const m = document.getElementById('sort-menu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
+function setSort(type) { currentSort = type; currentPage = 1; document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); event.target.classList.add('active'); toggleSortMenu(); tampilkanProduk(currentPage); }
+function goHome() { document.getElementById('search-input').value = ''; document.getElementById('clear-search').style.display = 'none'; currentCategory = 'Semua'; currentPage = 1; currentSort = 'asc'; document.querySelectorAll('.category-btn').forEach(btn => { btn.classList.remove('active'); if (btn.innerText === 'Semua') btn.classList.add('active'); }); document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); document.querySelector('.sort-option').classList.add('active'); tampilkanProduk(currentPage); }
+    const NOMOR_WA_PENJUAL = "6281234567890";
+    let keranjang = [];
+    function parsePrice(priceStr) { return parseInt(priceStr.replace(/[^0-9]/g, '')) || 0; }
+    function formatRupiah(number) { return "Rp" + number.toLocaleString('id-ID'); }
+    function tambahKeKeranjang(namaProduk) {
+      const produk = daftarProduk.find(p => p.name === namaProduk);
+      if (!produk) return;
+      const itemAda = keranjang.find(item => item.name === namaProduk);
+      if (itemAda) { itemAda.qty += 1; } else { keranjang.push({ name: produk.name, priceStr: produk.price, priceNum: parsePrice(produk.price), qty: 1 }); }
+      updateCartUI();
+    }
+    function ubahQty(namaProduk, delta) {
+      const item = keranjang.find(i => i.name === namaProduk);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) { keranjang = keranjang.filter(i => i.name !== namaProduk); }
+      updateCartUI();
+    }
+    function updateCartUI() {
+      const cartCountEl = document.getElementById('cart-count');
+      const cartListEl = document.getElementById('cart-items-list');
+      const grandTotalEl = document.getElementById('cart-grand-total');
+      let totalItemCount = 0; let grandTotal = 0; cartListEl.innerHTML = '';
+      if (keranjang.length === 0) { cartListEl.innerHTML = '<p style="text-align:center; color:#777;">Keranjang masih kosong.</p>'; } else {
+        keranjang.forEach(item => {
+          totalItemCount += item.qty; const subtotal = item.priceNum * item.qty; grandTotal += subtotal;
+          const itemDiv = document.createElement('div'); itemDiv.className = 'cart-item';
+          itemDiv.innerHTML = `<div class="cart-item-info"><div class="cart-item-title">${item.name}</div><div class="cart-item-price">${item.qty} x ${item.priceStr} = ${formatRupiah(subtotal)}</div></div><div class="cart-qty-control"><button class="btn-qty" onclick="ubahQty('${item.name}', -1)">-</button><span>${item.qty}</span><button class="btn-qty" onclick="ubahQty('${item.name}', 1)">+</button></div>`;
+          cartListEl.appendChild(itemDiv);
+        });
+      }
+      cartCountEl.innerText = totalItemCount; grandTotalEl.innerText = formatRupiah(grandTotal);
+    }
+    function openCartModal() { document.getElementById('cart-modal').style.display = 'flex'; }
+    function closeCartModal() { document.getElementById('cart-modal').style.display = 'none'; }
+    function sendToWhatsApp() {
+      if (keranjang.length === 0) { alert("Keranjang kamu masih kosong!"); return; }
+      let pesan = "*NOTA/BON TEMPO PEMBELIAN*\\n-----------------------------------\\n"; let grandTotal = 0;
+      keranjang.forEach((item, index) => { const subtotal = item.priceNum * item.qty; grandTotal += subtotal; pesan += `${index + 1}. ${item.name}\\n   ${item.qty} x ${item.priceStr} = ${formatRupiah(subtotal)}\\n`; });
+      pesan += "-----------------------------------\\n*TOTAL TAGIHAN: " + formatRupiah(grandTotal) + "*\\n\\nMohon diproses, terima kasih!";
+      window.open(`https://wa.me/${NOMOR_WA_PENJUAL}?text=${encodeURIComponent(pesan)}`, '_blank');
+    }
+    function copyCartSummary() {
+      if (keranjang.length === 0) { alert("Keranjang kamu masih kosong!"); return; }
+      let teks = "NOTA PEMBELIAN:\\n"; let grandTotal = 0;
+      keranjang.forEach((item, index) => { const subtotal = item.priceNum * item.qty; grandTotal += subtotal; teks += `${index + 1}. ${item.name} (${item.qty}x) = ${formatRupiah(subtotal)}\\n`; });
+      teks += `TOTAL: ${formatRupiah(grandTotal)}`;
+      navigator.clipboard.writeText(teks).then(() => { alert("Ringkasan berhasil disalin ke clipboard!"); });
+    }
+  </script>
+  <!-- Tombol Floating Keranjang -->
+  <button class="cart-floating-btn" onclick="openCartModal()">🛒 Keranjang (<span id="cart-count">0</span>)</button>
+  <!-- Modal Ringkasan Keranjang -->
+  <div id="cart-modal" class="cart-modal">
+    <div class="cart-content">
+      <div class="cart-header"><h3>Ringkasan Pesanan</h3><button class="close-cart-btn" onclick="closeCartModal()">&times;</button></div>
+      <div class="instruction-box">📌 <strong>Petunjuk:</strong><br>Silakan <strong>Screenshot</strong> tampilan ringkasan ini atau klik tombol <strong>Kirim ke WhatsApp</strong> di bawah untuk mengirim nota ke penjual/afiliator.</div>
+      <div id="cart-items-list"></div>
+      <div class="cart-total-box"><span>Total Tagihan:</span><span id="cart-grand-total">Rp0</span></div>
+      <div class="cart-actions">
+        <button class="btn-wa" onclick="sendToWhatsApp()">📱 Kirim Nota ke WhatsApp</button>
+        <button class="btn-copy" onclick="copyCartSummary()">📋 Salin Teks Ringkasan</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+realisasikan:
+Berikut adalah kode lengkap untuk fitur keranjang belanja sederhana & tombol kirim/screenshot WhatsApp yang disesuaikan langsung dengan struktur file index.html kamu.
+
+Kamu cukup menambahkan kode CSS, HTML, dan JavaScript berikut ke dalam file index.html milikmu.
+
+1. Tambahkan CSS Ini di Dalam <style>
+Letakkan kode ini di bagian paling bawah tag <style> (sebelum </style>):
+
+CSS
+/* ========== STYLING KERANJANG & MODAL ========== */
+/* Tombol Floating Keranjang di Pojok Kanan Bawah */
+.cart-floating-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+.cart-floating-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Tombol +Keranjang di Kartu Produk */
+.btn-add-cart {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-add-cart:hover {
+  background-color: #dddddd;
+}
+
+/* Modal Popup Ringkasan */
+.cart-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.cart-content {
+  background-color: #111111;
+  border: 1px solid #333333;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px;
+  color: #ffffff;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.cart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333333;
+  padding-bottom: 12px;
+  margin-bottom: 15px;
+}
+
+.cart-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-cart-btn {
+  background: none;
+  border: none;
+  color: #888888;
+  font-size: 24px;
+  cursor: pointer;
+}
+.close-cart-btn:hover { color: #ffffff; }
+
+/* Item List di Keranjang */
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #222222;
+}
+
+.cart-item-info {
+  flex: 1;
+  padding-right: 10px;
+}
+
+.cart-item-title {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cart-item-price {
+  font-size: 12px;
+  color: #888888;
+}
+
+.cart-qty-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-qty {
+  background: #222222;
+  color: #ffffff;
+  border: 1px solid #444444;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cart-total-box {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 15px 0;
+  border-top: 2px solid #333333;
+  margin-top: 15px;
+}
+
+.instruction-box {
+  background-color: #1a1a1a;
+  border: 1px dashed #555555;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 12px;
+  color: #cccccc;
+  line-height: 1.4;
+}
+
+.cart-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-wa {
+  background-color: #25D366;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-copy {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #555555;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+2. Tambahkan Elemen HTML Keranjang
+Letakkan kode ini di dekat bagian bawah <body> (tepat sebelum tag </body>):
+
+HTML
+<!-- Tombol Floating Keranjang -->
+<button class="cart-floating-btn" onclick="openCartModal()">
+  🛒 Keranjang (<span id="cart-count">0</span>)
+</button>
+
+<!-- Modal Ringkasan Keranjang -->
+<div id="cart-modal" class="cart-modal">
+  <div class="cart-content">
+    <div class="cart-header">
+      <h3>Ringkasan Pesanan</h3>
+      <button class="close-cart-btn" onclick="closeCartModal()">&times;</button>
+    </div>
+
+    <!-- Instruksi Screenshot / Kirim -->
+    <div class="instruction-box">
+      📌 <strong>Petunjuk:</strong><br>
+      Silakan <strong>Screenshot</strong> tampilan ringkasan ini atau klik tombol <strong>Kirim ke WhatsApp</strong> di bawah untuk mengirim nota ke penjual/afiliator.
+    </div>
+
+    <!-- Daftar Barang Belanjaan -->
+    <div id="cart-items-list">
+      <!-- Item akan dirender otomatis via JavaScript -->
+    </div>
+
+    <!-- Total Harga -->
+    <div class="cart-total-box">
+      <span>Total Tagihan:</span>
+      <span id="cart-grand-total">Rp0</span>
+    </div>
+
+    <!-- Tombol Aksi -->
+    <div class="cart-actions">
+      <button class="btn-wa" onclick="sendToWhatsApp()">📱 Kirim Nota ke WhatsApp</button>
+      <button class="btn-copy" onclick="copyCartSummary()">📋 Salin Teks Ringkasan</button>
+    </div>
+  </div>
+</div>
+3. Tambahkan Logika JavaScript Keranjang
+Masukkan fungsi-fungsi JavaScript ini ke dalam tag <script> utama milikmu:
+
+JavaScript
+// GANTI DENGAN NOMOR WHATSAPP PENJUAL/AFILIATOR (Format: 628xxx)
+const NOMOR_WA_PENJUAL = "6281234567890"; 
+
+let keranjang = [];
+
+// Helper untuk mengubah string harga (misal "Rp33.500") menjadi angka murni (33500)
+function parsePrice(priceStr) {
+  return parseInt(priceStr.replace(/[^0-9]/g, '')) || 0;
+}
+
+// Format angka ke format Rupiah (33500 -> Rp33.500)
+function formatRupiah(number) {
+  return "Rp" + number.toLocaleString('id-ID');
+}
+
+// 1. Fungsi Menambah Produk ke Keranjang
+function tambahKeKeranjang(namaProduk) {
+  const produk = daftarProduk.find(p => p.name === namaProduk);
+  if (!produk) return;
+
+  const itemAda = keranjang.find(item => item.name === namaProduk);
+  if (itemAda) {
+    itemAda.qty += 1;
+  } else {
+    keranjang.push({
+      name: produk.name,
+      priceStr: produk.price,
+      priceNum: parsePrice(produk.price),
+      qty: 1
+    });
+  }
+  updateCartUI();
+}
+
+// 2. Fungsi Mengubah Jumlah (Qty)
+function ubahQty(namaProduk, delta) {
+  const item = keranjang.find(i => i.name === namaProduk);
+  if (!item) return;
+
+  item.qty += delta;
+  if (item.qty <= 0) {
+    keranjang = keranjang.filter(i => i.name !== namaProduk);
+  }
+  updateCartUI();
+}
+
+// 3. Update Tampilan Keranjang
+function updateCartUI() {
+  const cartCountEl = document.getElementById('cart-count');
+  const cartListEl = document.getElementById('cart-items-list');
+  const grandTotalEl = document.getElementById('cart-grand-total');
+
+  let totalItemCount = 0;
+  let grandTotal = 0;
+  cartListEl.innerHTML = '';
+
+  if (keranjang.length === 0) {
+    cartListEl.innerHTML = '<p style="text-align:center; color:#777;">Keranjang masih kosong.</p>';
+  } else {
+    keranjang.forEach(item => {
+      totalItemCount += item.qty;
+      const subtotal = item.priceNum * item.qty;
+      grandTotal += subtotal;
+
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'cart-item';
+      itemDiv.innerHTML = `
+        <div class="cart-item-info">
+          <div class="cart-item-title">${item.name}</div>
+          <div class="cart-item-price">${item.qty} x ${item.priceStr} = ${formatRupiah(subtotal)}</div>
+        </div>
+        <div class="cart-qty-control">
+          <button class="btn-qty" onclick="ubahQty('${item.name}', -1)">-</button>
+          <span>${item.qty}</span>
+          <button class="btn-qty" onclick="ubahQty('${item.name}', 1)">+</button>
+        </div>
+      `;
+      cartListEl.appendChild(itemDiv);
+    });
+  }
+
+  cartCountEl.innerText = totalItemCount;
+  grandTotalEl.innerText = formatRupiah(grandTotal);
+}
+
+// 4. Buka / Tutup Modal
+function openCartModal() {
+  document.getElementById('cart-modal').style.display = 'flex';
+}
+
+function closeCartModal() {
+  document.getElementById('cart-modal').style.display = 'none';
+}
+
+// 5. Kirim via WhatsApp
+function sendToWhatsApp() {
+  if (keranjang.length === 0) {
+    alert("Keranjang kamu masih kosong!");
+    return;
+  }
+
+  let pesan = "*NOTA/BON TEMPO PEMBELIAN*\n";
+  pesan += "-----------------------------------\n";
+  
+  let grandTotal = 0;
+  keranjang.forEach((item, index) => {
+    const subtotal = item.priceNum * item.qty;
+    grandTotal += subtotal;
+    pesan += `${index + 1}. ${item.name}\n   ${item.qty} x ${item.priceStr} = ${formatRupiah(subtotal)}\n`;
+  });
+
+  pesan += "-----------------------------------\n";
+  pesan += `*TOTAL TAGIHAN: ${formatRupiah(grandTotal)}*\n\n`;
+  pesan += "Mohon diproses, terima kasih!";
+
+  const url = `https://wa.me/${NOMOR_WA_PENJUAL}?text=${encodeURIComponent(pesan)}`;
+  window.open(url, '_blank');
+}
+
+// 6. Salin Ringkasan ke Clipboard
+function copyCartSummary() {
+  if (keranjang.length === 0) {
+    alert("Keranjang kamu masih kosong!");
+    return;
+  }
+
+  let teks = "NOTA PEMBELIAN:\n";
+  let grandTotal = 0;
+  keranjang.forEach((item, index) => {
+    const subtotal = item.priceNum * item.qty;
+    grandTotal += subtotal;
+    teks += `${index + 1}. ${item.name} (${item.qty}x) = ${formatRupiah(subtotal)}\n`;
+  });
+  teks += `TOTAL: ${formatRupiah(grandTotal)}`;
+
+  navigator.clipboard.writeText(teks).then(() => {
+    alert("Ringkasan berhasil disalin ke clipboard!");
+  });
+}
+4. Hubungkan ke Kartu Produk
+Di bagian fungsi JavaScript kamu yang mencetak/render setiap produk (misalnya saat merender .pricing-card), tambahkan tombol ini di dalam kartu produk:
+
+HTML
+<button class="btn-add-cart" onclick="tambahKeKeranjang('${produk.name}')">+ Keranjang</button>
+
