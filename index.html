@@ -584,13 +584,14 @@ function addToCart(name, price) {
 function renderCart() {
   const list = document.getElementById('cart-items-list');
   const totalEl = document.getElementById('cart-total');
-  list.innerHTML = "";
+  let htmlContent = ""; // 1. Buat penampung string sementara
   let total = 0;
   cart.forEach((item, index) => {
     total += (item.price * item.quantity);
     const productData = daftarProduk.find(p => p.name === item.name);
     const imgUrl = productData ? productData.img : '';
-    list.innerHTML += `
+    // 2. Tambahkan ke string, bukan langsung ke DOM
+    htmlContent += `
       <div class="cart-item" style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
         <img src="${imgUrl}" style="width:50px; height:50px; object-fit:contain; border-radius:4px; background:white;">
         <div style="flex-grow:1;">
@@ -604,6 +605,8 @@ function renderCart() {
         </div>
       </div>`;
   });
+  // 3. Update DOM sekali saja di akhir
+  list.innerHTML = htmlContent;
   totalEl.innerText = "Total: Rp" + total.toLocaleString();
 }
 function changeQuantity(index, delta) {
