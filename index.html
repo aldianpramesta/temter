@@ -600,7 +600,7 @@ function renderCart() {
         </div>
         <div style="display: flex; align-items: center; gap: 10px;">
             <button onclick="changeQuantity(${index}, -1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 10px; font-size: 18px; font-weight: bold;">-</button>
-            <input type="number" value="${item.quantity}" min="1" onchange="updateQuantityFromInput(${index}, this.value)" class="no-spinner" style="width: 40px; background: #222; color: white; border: 1px solid #333; text-align: center; border-radius: 4px;">
+            <input type="text" inputmode="numeric" value="${item.quantity}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onchange="updateQuantityFromInput(${index}, this.value)" class="no-spinner" style="width: 40px; background: #222; color: white; border: 1px solid #333; text-align: center; border-radius: 4px;">
             <button onclick="changeQuantity(${index}, 1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 10px; font-size: 18px; font-weight: bold;">+</button>
         </div>
       </div>`;
