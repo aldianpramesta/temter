@@ -674,6 +674,13 @@ function handleCheckout() {
   const url = "https://wa.me/6285846243884?text=" + encodeURIComponent(message);
   window.open(url, '_blank');
 }
+document.addEventListener('click', function(event) {
+  const menu = document.getElementById('sort-menu');
+  const toggleBtn = document.querySelector('.sort-main-btn');
+  if (menu && toggleBtn && !menu.contains(event.target) && event.target !== toggleBtn) {
+    menu.style.display = 'none';
+  }
+});
   </script>
 <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
 <div id="cart-sidebar" class="cart-sidebar">
