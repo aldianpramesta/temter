@@ -541,6 +541,7 @@
     });
 
     document.getElementById('do-search-btn').addEventListener('click', () => {
+      currentCategory = "Semua";
       currentPage = 1;
       tampilkanProduk(currentPage);
       searchInput.blur();
