@@ -577,6 +577,11 @@
       tampilkanProduk(currentPage);
       searchInput.blur();
     });
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        document.getElementById('do-search-btn').click();
+      }
+    });
 
     // JALANKAN SISTEM PERTAMA KALI
     buatTombolKategori(); 
