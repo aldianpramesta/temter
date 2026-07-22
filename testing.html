@@ -270,6 +270,9 @@
       outline: none;
       transition: border-color 0.2s;
     }
+    .search-bar::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+    }
     .search-bar:focus {
       border-color: #ffffff;
     }
@@ -344,10 +347,9 @@
 
   <section class="section-5">
     <!-- Input Search Bar -->
-    <div class="search-wrapper">
-      <input type="text" id="search-input" placeholder="Ketik yang diperlukan di sini..." class="search-bar">
-      <button id="clear-search" class="clear-search-btn">&times;</button>
-    </div>
+<form class="search-wrapper" action="javascript:void(0)" onsubmit="return false;">
+      <input type="search" id="search-input" placeholder="Ketik yang diperlukan di sini..." class="search-bar">
+    </form>
 
     <!-- Wadah Tombol Kategori Otomatis -->
     <div id="category-container" class="category-wrapper"></div>
@@ -450,7 +452,6 @@
           currentCategory = kat;
           currentPage = 1; 
           document.getElementById('search-input').value = '';
-          document.getElementById('clear-search').style.display = 'none';
           document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
           button.classList.add('active');
           tampilkanProduk(currentPage);
@@ -537,15 +538,10 @@
 
     // Kontrol Search Input
     const searchInput = document.getElementById('search-input');
-    const clearSearchBtn = document.getElementById('clear-search');
     let timerPencarian;
 
     searchInput.addEventListener('input', () => {
-      if (searchInput.value.length > 0) {
-        clearSearchBtn.style.display = 'block';
-      } else {
-        clearSearchBtn.style.display = 'none';
-      }
+      clearTimeout(timerPencarian);
 
       clearTimeout(timerPencarian);
       timerPencarian = setTimeout(() => {
@@ -553,14 +549,8 @@
         tampilkanProduk(currentPage);
       }, 2000);
     });
+function goHome() { document.getElementById('search-input').value = ''; currentCategory = 'Semua'; currentPage = 1; currentSort = 'asc'; document.querySelectorAll('.category-btn').forEach(btn => { btn.classList.remove('active'); if (btn.innerText === 'Semua') btn.classList.add('active'); }); document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); document.querySelector('.sort-option').classList.add('active'); tampilkanProduk(currentPage); }
 
-    clearSearchBtn.addEventListener('click', () => {
-      searchInput.value = "";
-      clearSearchBtn.style.display = 'none';
-      currentPage = 1;
-      tampilkanProduk(currentPage);
-      searchInput.focus();
-    });
 
     // JALANKAN SISTEM PERTAMA KALI
     buatTombolKategori(); 
@@ -568,7 +558,6 @@
 
 function toggleSortMenu() { const m = document.getElementById('sort-menu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
 function setSort(type) { currentSort = type; currentPage = 1; document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); event.target.classList.add('active'); toggleSortMenu(); tampilkanProduk(currentPage); }
-function goHome() { document.getElementById('search-input').value = ''; document.getElementById('clear-search').style.display = 'none'; currentCategory = 'Semua'; currentPage = 1; currentSort = 'asc'; document.querySelectorAll('.category-btn').forEach(btn => { btn.classList.remove('active'); if (btn.innerText === 'Semua') btn.classList.add('active'); }); document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); document.querySelector('.sort-option').classList.add('active'); tampilkanProduk(currentPage); }
 let cart = [];
 function toggleCart() {
   document.getElementById('cart-sidebar').classList.toggle('active');
