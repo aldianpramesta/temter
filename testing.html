@@ -554,9 +554,30 @@
     // JALANKAN SISTEM PERTAMA KALI
     tampilkanProduk(currentPage);
 
-function toggleCategoryMenu() { const m = document.getElementById('category-menu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; if (m.style.display === 'block') { const listKategori = ["Semua", ...new Set(daftarProduk.map(p => p.category).filter(Boolean))]; m.innerHTML = listKategori.map(kat => `<button class="sort-option ${kat === currentCategory ? 'active' : ''}" onclick="setCategory('${kat}')">${kat}</button>`).join(''); } }
+function toggleCategoryMenu() { 
+  const catMenu = document.getElementById('category-menu');
+  const sortMenu = document.getElementById('sort-menu');
+  
+  // Tutup menu sorting jika terbuka
+  sortMenu.style.display = 'none';
+  
+  catMenu.style.display = (catMenu.style.display === 'block') ? 'none' : 'block'; 
+  
+  if (catMenu.style.display === 'block') { 
+    const listKategori = ["Semua", ...new Set(daftarProduk.map(p => p.category).filter(Boolean))]; 
+    catMenu.innerHTML = listKategori.map(kat => `<button class="sort-option ${kat === currentCategory ? 'active' : ''}" onclick="setCategory('${kat}')">${kat}</button>`).join(''); 
+  } 
+}
 function setCategory(kat) { currentCategory = kat; currentPage = 1; document.getElementById('category-menu').style.display = 'none'; tampilkanProduk(currentPage); }
-function toggleSortMenu() { const m = document.getElementById('sort-menu'); m.style.display = (m.style.display === 'block') ? 'none' : 'block'; }
+function toggleSortMenu() { 
+  const sortMenu = document.getElementById('sort-menu');
+  const catMenu = document.getElementById('category-menu');
+  
+  // Tutup menu kategori jika terbuka
+  catMenu.style.display = 'none';
+  
+  sortMenu.style.display = (sortMenu.style.display === 'block') ? 'none' : 'block'; 
+}
 function setSort(type) { currentSort = type; currentPage = 1; document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); event.target.classList.add('active'); toggleSortMenu(); tampilkanProduk(currentPage); }
 function goHome() { document.getElementById('search-input').value = ''; document.getElementById('clear-search').style.display = 'none'; currentCategory = 'Semua'; currentPage = 1; currentSort = 'asc'; document.querySelectorAll('.category-btn').forEach(btn => { btn.classList.remove('active'); if (btn.innerText === 'Semua') btn.classList.add('active'); }); document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); document.querySelector('.sort-option').classList.add('active'); tampilkanProduk(currentPage); }
 let cart = [];
