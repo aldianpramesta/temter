@@ -568,7 +568,7 @@ function toggleCategoryMenu() {
     catMenu.innerHTML = listKategori.map(kat => `<button class="sort-option ${kat === currentCategory ? 'active' : ''}" onclick="setCategory('${kat}')">${kat}</button>`).join(''); 
   } 
 }
-function setCategory(kat) { currentCategory = kat; currentPage = 1; document.getElementById('category-menu').style.display = 'none'; tampilkanProduk(currentPage); }
+function setCategory(kat) { currentCategory = kat; currentPage = 1; document.getElementById("search-input").value = ""; document.getElementById("clear-search").style.display = "none"; document.getElementById("category-menu").style.display = "none"; tampilkanProduk(currentPage); }
 function toggleSortMenu() { 
   const sortMenu = document.getElementById('sort-menu');
   const catMenu = document.getElementById('category-menu');
