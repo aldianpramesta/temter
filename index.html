@@ -1,47 +1,716 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Saya</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMTER</title>
+
+  <script>
+  function showOptions() {
+    document.getElementById('options').style.display = 'block';
+  }
+  </script>
+
+  <style>
+    /* Mengimpor font dari Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #000; /* Warna latar belakang hitam */
+      color: #ffffff; /* Warna teks default putih */
+      font-family: 'Instrument Sans', sans-serif; /* Font utama */
+      overflow-x: hidden;
+    }
+
+    section {
+      width: 100%; /* Lebar penuh */
+      display: flex; /* Flexbox layout */
+      flex-direction: column; /* Susun elemen ke bawah */
+      justify-content: center;
+      align-items: center; /* Posisi tengah secara horizontal */
+    }
+
+    /* ========== Animasi Global ========== */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Section 1 - Judul Nama */
+    .section-1 {
+      height: auto; /* Otomatis mengikuti isi */
+      padding: 32px 16px; /* Spasi atas bawah 32px, samping 16px */
+      display: block; /* Supaya kontennya gak center (default block) */
+    }
+    .section-1 .judul {
+      font-weight: bold;
+      font-size: 16px;
+      letter-spacing: -0.04em; /* Spasi antar huruf lebih rapat */
+      line-height: 1em;
+      padding-left: 20px;
+    }
+    .section-1 .temter {
+      font-family: 'Instrument Serif', serif; /* Font khusus untuk TEMTER */
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Section 5 - Pricing Cards */
+    .section-5 {
+      height: auto; /* Diubah jadi otomatis mengikuti isi barang */
+      padding: 60px 16px; /* Ditambah sedikit jarak atasnya biar gak nempel branding */
+      display: flex;
+      justify-content: flex-start; /* Dimulai normal dari atas ke bawah */
+      align-items: center;
+    }
+    
+    .pricing-wrapper {
+        display: flex;
+        gap: 12px 24px;
+        width: 100%;
+        max-width: 1200px;
+        justify-content: space-between; 
+        flex-wrap: wrap;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 24px; /* <- Ubah ukuran semua teks produk di sini */
+      margin-bottom: 15px;
+      color: #ffffff;
+    }
+    
+    .product-image-container {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .product-image-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    .pricing-card {
+      background-color: #111111;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .harga-durasi {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: baseline;
+      margin-bottom: 45px;
+    }
+
+    .harga-durasi .harga {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 10px;
+      color: #808080;
+    }
+
+    .harga-durasi .durasi {
+      font-family: 'Instrument Sans', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.8px;
+      line-height: 15px;
+      color: #808080;
+    }
+
+    /* Styling untuk Tombol Halaman (Pagination) */
+    .pagination-wrapper-buttons {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 40px;
+      width: 100%;
+    }
+
+    .page-btn {
+      background-color: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .page-btn.active {
+      background-color: #ffffff;
+      color: #000000;
+      border-color: #ffffff;
+    }
+
+    .page-btn:hover:not(.active) {
+      background-color: #222222;
+      border-color: #555555;
+    }
+
+    /* ================= TAMPILAN KHUSUS HP (RESPONSIF) ================= */
+    @media (max-width: 768px) {
+        .pricing-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 8px;
+            padding: 0 4px;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
+
+        .pricing-card {
+            height: auto;
+            padding: 8px 8px 20px 8px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #2c3e50;
+
+        .product-image-container {
+            height: 80px; 
+            margin-bottom: 8px;
         }
-        .footer {
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
+
+        .product-name {
+            font-size: 14px;
+            line-height: 1.2em;
+            margin-bottom: 10px;
         }
-    </style>
+
+        .harga-durasi {
+            margin-bottom: 0px;
+        }
+
+        .harga-durasi .harga {
+            font-size: 13px;
+        }
+    }
+    .cart-container { display: flex; justify-content: flex-end; }
+    .btn-keranjang { background: transparent; color: #ffffff; border: none; padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+    .btn-keranjang:hover { transform: scale(1.1); }
+.cart-sidebar { position: fixed; top: 0; right: -400px; width: 350px; height: 100%; background: #111; border-left: 1px solid #333; transition: right 0.3s ease; z-index: 1000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+.cart-sidebar.active { right: 0; }
+.cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 999; }
+.cart-overlay.active { display: block; }
+.cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; color: #fff; font-size: 14px; }
+.cart-total { margin-top: 20px; font-weight: bold; border-top: 1px solid #333; padding-top: 10px; }
+.checkout-btn { background-color: #A0522D; color: #ffffff; border: none; padding: 12px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: background 0.3s; }
+.checkout-btn:hover { background-color: #8B4513; }
+    @keyframes blink-wood {
+      0% { color: #ffffff; }
+      50% { color: #a0522d; }
+      100% { color: #ffffff; }
+    }
+    .blink-effect {
+      animation: blink-wood 1s ease-in-out;
+    }
+    @keyframes blink-to-brown {
+      0% { stroke: #ffffff; }
+      50% { stroke: #a0522d; }
+      100% { stroke: #a0522d; }
+    }
+    .blink-icon-active {
+      animation: blink-to-brown 1s ease-in-out forwards;
+    }
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.no-spinner {
+  -moz-appearance: textfield;
+}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Selamat Datang!</h1>
-        <p>Ini adalah halaman HTML saya yang tersimpan di GitHub.</p>
-        
-        <div class="footer">
-            gemini berhasil akses
-        </div>
+  <!-- Section 1: Nama & Branding -->
+  <section class="section-1">
+    <div class="judul">
+      <span class="temter">TEMTER</span>
     </div>
+  </section>
+
+  <!-- Section 5: Pricing / Katalog Produk -->
+  <style>
+    /* Styling khusus untuk Search Bar & Tombol Hapus */
+    .search-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .search-bar {
+      width: 100%;
+      padding: 12px 80px 12px 16px;
+      background-color: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-bar:focus {
+      border-color: #ffffff;
+    }
+    .clear-search-btn {
+      position: absolute;
+      right: 42px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #888888;
+      cursor: pointer;
+      padding: 0;
+      display: none;
+      transition: color 0.2s;
+      width: 24px;
+      height: 24px;
+    }
+    .search-trigger-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #888888;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+      width: 24px;
+      height: 24px;
+    }
+    .clear-search-btn:hover, .search-trigger-btn:hover {
+      color: #ffffff;
+    }
+
+    /* Styling khusus untuk Tombol Pilihan Kategori */
+    .sort-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .sort-select {
+      background-color: #111111;
+      color: #ffffff;
+      border: 1px solid #333333;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+    }
+.sort-wrapper { position: relative; display: flex; justify-content: center; margin-bottom: 25px; background: rgba(255, 255, 255, 0.05); padding: 6px; border-radius: 12px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); width: fit-content; margin-left: auto; margin-right: auto; } .sort-main-btn, .home-btn { background: transparent; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; } .sort-main-btn:hover, .home-btn:hover { background: rgba(255, 255, 255, 0.15); } .sort-menu { position: absolute; top: 100%; margin-top: 10px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; z-index: 10; display: none; flex-direction: row; flex-wrap: wrap; width: 300px; gap: 5px; padding: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); } .sort-option { background: none; border: none; color: #888; padding: 10px; cursor: pointer; text-align: left; font-weight: 600; width: auto; border-radius: 6px; transition: background 0.2s; } .sort-option:hover { background: rgba(255, 255, 255, 0.1); } .sort-option.active { color: #fff; }
+  </style>
+
+  <section class="section-5">
+    <!-- Input Search Bar -->
+    <div class="search-wrapper">
+      <input type="text" id="search-input" placeholder="Ketik yang diperlukan di sini..." class="search-bar">
+      <button id="clear-search" class="clear-search-btn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      <button id="do-search-btn" class="search-trigger-btn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
+    </div>
+
+    <!-- Wadah Tombol Kategori Otomatis -->
+
+    <!-- Dropdown Urutan Harga -->
+<div class="sort-wrapper"><button class="home-btn" onclick="goHome()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></button><button class="sort-main-btn" onclick="toggleCategoryMenu()">Kategori <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="category-menu" class="sort-menu"></div><button class="sort-main-btn" style="margin-left: 10px;" onclick="toggleSortMenu()">Sorting <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 5px;"><polyline points="6 9 12 15 18 9"></polyline></svg></button><div id="sort-menu" class="sort-menu" style="right: 0;"><button class="sort-option active" onclick="setSort('asc')">Harga Termurah</button><button class="sort-option" onclick="setSort('desc')">Harga Tertinggi</button></div></div>
+
+    <!-- Wadah Produk -->
+    <div class="pricing-wrapper" id="tempat-produk"></div>
+    
+    <!-- Wadah Tombol Halaman (1 2 3) -->
+    <div id="pagination-container" class="pagination-wrapper-buttons"></div>
+  </section>
+
+  <script>
+    // 1. DATA PRODUK + KATEGORI
+    const daftarProduk = [
+  { name: "DETERJEN BUBUK RINSO 1440G", price: "Rp33.500", img: "images/products/deterjen pembersih pakaian/rinso deterjen bubuk.webp", category: "Deterjen Pembersih Pakaian" },
+  { name: "DETERJEN CAIR SOKLIN 1.6L", price: "Rp35,000", img: "images/products/deterjen pembersih pakaian/soklin deterjen cair.webp", category: "Deterjen Pembersih Pakaian" },
+  { name: "DETERJEN CAIR SOKLIN 700ML", price: "Rp17.500", img: "images/products/deterjen pembersih pakaian/soklin deterjen cair.webp", category: "Deterjen Pembersih Pakaian" },
+  { name: "SABUN CUCI PIRING MAMA LEMON 690ML", price: "Rp10.000", img: "images/products/sabun cuci piring/mama lemon 690ml sabun cuci piring.webp", category: "Sabun Cuci Piring" },
+  { name: "SABUN CUCI PIRING MAMA LEMON 950ML", price: "Rp14.000", img: "images/products/sabun cuci piring/mama lemon 950ml sabun cuci piring.webp", category: "Sabun Cuci Piring" },
+  { name: "SABUN CUCI PIRING SUNLIGHT 910ML", price: "Rp14.500", img: "images/products/sabun cuci piring/sunlight sabun cuci piring.webp", category: "Sabun Cuci Piring" },
+  { name: "SABUN MANDI BIORE 800ML", price: "Rp39.000", img: "images/products/sabun mandi/biore sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI FRES 400ML", price: "Rp18.000", img: "images/products/sabun mandi/fres sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI GIV WHITE 800ML", price: "Rp31.500", img: "images/products/sabun mandi/giv white sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI K NATURAL 400ML", price: "Rp19.500", img: "images/products/sabun mandi/k natural sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI LUX BOTANICALS 400ML", price: "Rp21.500", img: "images/products/sabun mandi/lux botanicals sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "SABUN MANDI LUX BOTANICALS 800ML", price: "Rp41.000", img: "images/products/sabun mandi/lux botanicals sabun mandi.webp", category: "Sabun Mandi" },
+  { name: "PASTA GIGI CIPTADENT MINT 225G", price: "Rp13.500", img: "images/products/pasta gigi/ciptadent mint pasta gigi.webp", category: "Pasta Gigi" },
+  { name: "PASTA GIGI PEPSODENT COMPLETE 8 150G", price: "Rp14.000", img: "images/products/pasta gigi/pepsodent complete pasta gigi.webp", category: "Pasta Gigi" },
+  { name: "PASTA GIGI PEPSODENT 2 X 225G", price: "Rp28.000", img: "images/products/pasta gigi/pepsodent pasta gigi.webp", category: "Pasta Gigi" },
+  { name: "SHAMPOO EMERON BLACK SHINE 170ML", price: "Rp19.500", img: "images/products/shampoo/emeron black shine shampoo.webp", category: "Shampoo" },
+  { name: "DEODORAN POSH ROLL ON 50ML", price: "Rp16.500", img: "images/products/deodorant/posh roll on deodoran.webp", category: "Deodorant" },
+  { name: "SABUN WAJAH GLOW & LOVELY 50ML", price: "Rp21.000", img: "images/products/sabun wajah/glow & lovely sabun cuci wajah.webp", category: "Sabun Wajah" },
+  { name: "SABUN WAJAH GLOW & LOVELY 100ML", price: "Rp34.400", img: "images/products/sabun wajah/glow & lovely sabun cuci wajah.webp", category: "Sabun Wajah" },
+  { name: "KETUMBAR BUBUK DESAKU 5 X 12.5G", price: "Rp5000", img: "images/products/bumbu dapur/desaku ketumbar bubuk.webp", category: "Bumbu Dapur" },
+  { name: "MERICA BUBUK LADAKU 5 X 2.5G", price: "Rp5000", img: "images/products/bumbu dapur/ladaku merica bubuk.webp", category: "Bumbu Dapur" },
+  { name: "BUMBU KALDU ROYCO RASA AYAM 94G", price: "Rp5000", img: "images/products/bumbu dapur/royco rasa ayam bumbu kaldu 94g.webp", category: "Bumbu Dapur" },
+  { name: "BUMBU KALDU ROYCO RASA SAPI 10 X 8G", price: "Rp5000", img: "images/products/bumbu dapur/royco rasa sapi saset bumbu kaldu.webp", category: "Bumbu Dapur" },
+  { name: "OBAT NYAMUK BAYGON BATANG ISI 5PCS", price: "Rp5000", img: "images/products/obat nyamuk/baygon batang pembasmi nyamuk.webp", category: "Obat Nyamuk" },
+  { name: "OBAT NYAMUK BAYGON 675ML", price: "Rp44.000", img: "images/products/obat nyamuk/baygon pembasmi nyamuk.webp", category: "Obat Nyamuk" },
+  { name: "KAPAS WAJAH MINISO ISI 1000PCS", price: "Rp29.000", img: "images/products/kapas pembersih wajah/miniso kapas wajah.webp", category: "Kapas Pembersih Wajah" },
+  { name: "KAPAS WAJAH SELECTION 35G", price: "Rp7000", img: "images/products/kapas pembersih wajah/selection kapas wajah.webp", category: "Kapas Pembersih Wajah" },
+  { name: "KOREK KUPING SELECTION ISI 100PCS", price: "Rp5000", img: "images/products/korek kuping/selection korek kuping.webp", category: "Korek Kuping" },
+  { name: "MICELLAR WATER VIVA COLLAGEN 100ML", price: "Rp21.500", img: "images/products/micellar water/viva collagen micellar water.webp", category: "Micellar Water" },
+  { name: "MIE INDOMIE AYAM BAWANG 5 x 69G", price: "Rp17.000", img: "images/products/mie/indomie ayam bawang mie.webp", category: "Mie" },
+  { name: "MIE INDOMIE GORENG AYAM GEPREK 5 x 85G", price: "Rp17.000", img: "images/products/mie/indomie goreng ayam geprek mie.webp", category: "Mie" },
+  { name: "MIE INDOMIE GORENG 5 x 85G", price: "Rp17.000", img: "images/products/mie/indomie goreng mie.webp", category: "Mie" },
+  { name: "MINYAK GORENG FILMA 2L", price: "Rp47.000", img: "images/products/minyak goreng/filma minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG FORTUNE 2L", price: "Rp46.000", img: "images/products/minyak goreng/fortune minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG KELAPA MAS 2L", price: "Rp46.000", img: "images/products/minyak goreng/kelapa mas minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG ROSE BRAND 1L", price: "Rp23.500", img: "images/products/minyak goreng/rose brand minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG SOVIA 2L", price: "Rp46.000", img: "images/products/minyak goreng/sovia minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG TROBOSS 2L", price: "Rp46.000", img: "images/products/minyak goreng/troboss minyak goreng.webp", category: "Minyak Goreng" },
+  { name: "MINYAK GORENG SUNCO 2L", price: "Rp47.000", img: "images/products/minyak goreng/minyak goreng sunco.webp", category: "Minyak Goreng" },
+  { name: "GULA PASIR ROSE BRAND 1KG", price: "Rp19.500", img: "images/products/gula/gula pasir rose brand.webp", category: "Gula" },
+  { name: "TEPUNG TERIGU SEGITIGA BIRU 1KG", price: "Rp14.000", img: "images/products/tepung/tepung terigu segitiga biru.webp", category: "Tepung" },
+  { name: "SABUN LANTAI SOKLIN 700ML", price: "Rp10.000", img: "images/products/sabun pembersih lantai/soklin lantai sabun lantai.webp", category: "Sabun Pembersih Lantai" },
+  { name: "SABUN LANTAI SUPER PELL APPLE 760ML", price: "Rp14.000", img: "images/products/sabun pembersih lantai/super pell apple sabun lantai.webp", category: "Sabun Pembersih Lantai" },
+  { name: "KECAP MANIS BANGO POUCH 700 ML", price: "Rp26.500", img: "images/products/kecap/kecap manis bango pouch.webp", category: "Kecap" },
+  { name: "KECAP MANIS BANGO BOTOL 385G", price: "Rp24.000", img: "images/products/kecap/kecap manis kecap bango botol.webp", category: "Kecap" },
+  { name: "KECAP MANIS BANGO BOTOL 189G", price: "Rp11.000", img: "images/products/kecap/kecap manis kecap bango botol.webp", category: "Kecap" },
+  { name: "SUPLEMEN KULIT SIDOMUNCUL VIT C1000 COLLAGEN MINUMAN SEDUH 6 X 4.5G", price: "Rp12.000", img: "images/products/supplement/sidomuncul vit c1000 collagen minuman seduh supplement kulit.webp", category: "Supplement" },
+  { name: "SUPLEMEN KULIT SIDOMUNCUL VIT C1000 MUSCAT GRAPE MINUMAN SEDUH 6 X 4.5G", price: "Rp12.000", img: "images/products/supplement/sidomuncul vit c1000 muscat grape minuman seduh supplement kulit.webp", category: "Supplement" },
+  { name: "BISKUIT TRICK BAKED CHIP ASIAN BBQ 4 X 15G", price: "Rp6000", img: "images/products/cemilan/trick baked chip asian bbq biskuit.webp", category: "Cemilan" },
+  { name: "KOPI GOOD DAY CAPUCCINO 10 X 25G", price: "Rp25.000", img: "images/products/kopi/good day capuccino kopi.webp", category: "Kopi" },
+  { name: "KOPI GOOD DAY MOCACINNO 10 X 20G", price: "Rp20.000", img: "images/products/kopi/good day mocacinno kopi.webp", category: "Kopi" },
+  { name: "KOPI KAPAL API MINI 20 X 6G", price: "Rp20.000", img: "images/products/kopi/kapal api mini kopi.webp", category: "Kopi" },
+  { name: "KOPI KAPAL API SPECIAL MIX 10 X 23G", price: "Rp20.000", img: "images/products/kopi/kapal api special mix kopi.webp", category: "Kopi" },
+  { name: "KOPI LUWAK WHITE KOFFIE 10 X 20G", price: "Rp20.000", img: "images/products/kopi/luwak white koffie kopi.webp", category: "Kopi" },
+  { name: "KOPI TOP COFFEE GULA AREN 9 X 22G", price: "Rp14.000", img: "images/products/kopi/top coffee gula aren kopi.webp", category: "Kopi" },
+  { name: "BODY LOTION EMERON LOVELY JEJU ORANGE 500ML", price: "Rp17.000", img: "images/products/body lotion/emeron lovely jeju orange body lotion.webp", category: "Body Lotion" },
+  { name: "SAUS CABE BELIBIS 135 ML", price: "Rp10.000", img: "images/products/saus/saus cabe belibis 135ml.webp", category: "Saus" },
+    ];
+
+    // 2. PENGATURAN AWAL
+    let currentPage = 1;      
+    let currentCategory = "Semua"; 
+    let currentSort = 'asc'; 
+    function parseHarga(hargaStr) {
+      return parseInt(hargaStr.replace(/[^0-9]/g, '')) || 0;
+    }
+    const itemsPerPage = window.innerWidth <= 768 ? 12 : 12;  
+
+    // Fungsi membuat tombol filter kategori secara otomatis dari data produk
+    function buatTombolKategori() {
+      const catContainer = document.getElementById('category-container');
+      const listKategori = ["Semua", ...new Set(daftarProduk.map(p => p.category).filter(Boolean))];
+      catContainer.innerHTML = ""; 
+
+      listKategori.forEach(kat => {
+        const button = document.createElement('button');
+        button.innerText = kat;
+        button.classList.add('category-btn');
+        
+        if (kat === currentCategory) button.classList.add('active');
+
+        button.addEventListener('click', () => {
+          currentCategory = kat;
+          currentPage = 1; 
+          document.getElementById('search-input').value = '';
+          document.getElementById('clear-search').style.display = 'none';
+          document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+          tampilkanProduk(currentPage);
+        });
+
+        catContainer.appendChild(button);
+      });
+    }
+
+    // Fungsi untuk menampilkan produk berdasarkan halaman, kata kunci pencarian, & kategori
+    function tampilkanProduk(page) {
+      const container = document.getElementById('tempat-produk');
+      container.innerHTML = ""; 
+
+      const kataKunci = document.getElementById('search-input').value.toLowerCase();
+
+      const produkDifilter = daftarProduk.filter(produk => {
+        const cocokKataKunci = produk.name.toLowerCase().includes(kataKunci);
+        const cocokKategori = (currentCategory === "Semua") || (produk.category === currentCategory);
+        return cocokKataKunci && cocokKategori;
+      });
+
+      // Proses sortir berdasarkan harga
+      produkDifilter.sort((a, b) => {
+        const hargaA = parseHarga(a.price);
+        const hargaB = parseHarga(b.price);
+        return currentSort === 'asc' ? hargaA - hargaB : hargaB - hargaA;
+      });
+
+      const startIndex = (page - 1) * itemsPerPage;
+      const endIndex = page * itemsPerPage;
+      const produkHalamanIni = produkDifilter.slice(startIndex, endIndex);
+
+      produkHalamanIni.forEach(produk => {
+        container.innerHTML += `
+          <div class="pricing-card">
+            <div class="product-image-container">
+              <img src="${produk.img}" alt="${produk.name}">
+            </div>
+            <div class="product-name">${produk.name}</div>
+            <div class="harga-durasi">
+              <span class="harga">${produk.price}</span>
+              <div class="cart-container">
+<button class="btn-keranjang" onclick="addToCart('${produk.name}', '${produk.price}')">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="8" cy="21" r="1"></circle>
+                    <circle cx="19" cy="21" r="1"></circle>
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      buatTombolNavigasi(produkDifilter.length);
+    }
+
+    // Fungsi membuat navigasi halaman angka otomatis
+    function buatTombolNavigasi(totalItems) {
+      const paginationContainer = document.getElementById('pagination-container');
+      paginationContainer.innerHTML = "";
+
+      const totalPages = Math.ceil(totalItems / itemsPerPage);
+      if (totalPages <= 1) return;
+
+      for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.innerText = i;
+        button.classList.add('page-btn');
+        
+        if (i === currentPage) button.classList.add('active');
+
+        button.addEventListener('click', () => {
+          currentPage = i;
+          tampilkanProduk(currentPage);
+          document.getElementById('tempat-produk').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        paginationContainer.appendChild(button);
+      }
+    }
+
+    // Kontrol Search Input
+    const searchInput = document.getElementById('search-input');
+    const clearSearchBtn = document.getElementById('clear-search');
+    let timerPencarian;
+
+    searchInput.addEventListener('input', () => {
+      if (searchInput.value.length > 0) {
+        clearSearchBtn.style.display = 'block';
+      } else {
+        clearSearchBtn.style.display = 'none';
+      }
+
+    });
+
+    clearSearchBtn.addEventListener('click', () => {
+      searchInput.value = "";
+      clearSearchBtn.style.display = 'none';
+      currentPage = 1;
+      tampilkanProduk(currentPage);
+      searchInput.focus();
+    });
+
+    document.getElementById('do-search-btn').addEventListener('click', () => {
+      currentCategory = "Semua";
+      currentPage = 1;
+      tampilkanProduk(currentPage);
+      searchInput.blur();
+    });
+    searchInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        document.getElementById('do-search-btn').click();
+      }
+    });
+
+    // JALANKAN SISTEM PERTAMA KALI
+    tampilkanProduk(currentPage);
+
+function toggleCategoryMenu() { 
+  const catMenu = document.getElementById('category-menu');
+  const sortMenu = document.getElementById('sort-menu');
+  
+  // Tutup menu sorting jika terbuka
+  sortMenu.style.display = 'none';
+  
+  catMenu.style.display = (catMenu.style.display === 'block') ? 'none' : 'block'; 
+  
+  if (catMenu.style.display === 'block') { 
+    const listKategori = ["Semua", ...new Set(daftarProduk.map(p => p.category).filter(Boolean))]; 
+    catMenu.innerHTML = listKategori.map(kat => `<button class="sort-option ${kat === currentCategory ? 'active' : ''}" onclick="setCategory('${kat}')">${kat}</button>`).join(''); 
+  } 
+}
+function setCategory(kat) { currentCategory = kat; currentPage = 1; document.getElementById("search-input").value = ""; document.getElementById("clear-search").style.display = "none"; document.getElementById("category-menu").style.display = "none"; tampilkanProduk(currentPage); }
+function toggleSortMenu() { 
+  const sortMenu = document.getElementById('sort-menu');
+  const catMenu = document.getElementById('category-menu');
+  
+  // Tutup menu kategori jika terbuka
+  catMenu.style.display = 'none';
+  
+  sortMenu.style.display = (sortMenu.style.display === 'block') ? 'none' : 'block'; 
+}
+function setSort(type) { currentSort = type; currentPage = 1; document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); event.target.classList.add('active'); toggleSortMenu(); tampilkanProduk(currentPage); }
+function goHome() { document.getElementById('search-input').value = ''; document.getElementById('clear-search').style.display = 'none'; currentCategory = 'Semua'; currentPage = 1; currentSort = 'asc'; document.querySelectorAll('.category-btn').forEach(btn => { btn.classList.remove('active'); if (btn.innerText === 'Semua') btn.classList.add('active'); }); document.querySelectorAll('.sort-option').forEach(el => el.classList.remove('active')); document.querySelector('.sort-option').classList.add('active'); tampilkanProduk(currentPage); }
+let cart = [];
+function toggleCart() {
+  document.getElementById('cart-sidebar').classList.toggle('active');
+  document.getElementById('cart-overlay').classList.toggle('active');
+}
+function addToCart(name, price) {
+  const hargaAngka = parseHarga(price);
+  const existingItem = cart.find(item => item.name === name);
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cart.push({ name, price: hargaAngka, quantity: 1 });
+  }
+  const badge = document.getElementById('cart-badge');
+  const totalQty = cart.reduce((acc, item) => acc + item.quantity, 0);
+  badge.innerText = totalQty;
+  badge.style.display = 'flex';
+  const icon = document.getElementById('cart-icon');
+  icon.classList.remove('blink-icon-active');
+  void icon.offsetWidth;
+  icon.classList.add('blink-icon-active');
+  badge.classList.remove('blink-effect');
+  void badge.offsetWidth;
+  badge.classList.add('blink-effect');
+  renderCart();
+}
+function renderCart() {
+  const list = document.getElementById('cart-items-list');
+  const totalEl = document.getElementById('cart-total');
+  let htmlContent = ""; // 1. Buat penampung string sementara
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += (item.price * item.quantity);
+    const productData = daftarProduk.find(p => p.name === item.name);
+    const imgUrl = productData ? productData.img : '';
+    // 2. Tambahkan ke string, bukan langsung ke DOM
+    htmlContent += `
+      <div class="cart-item" style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+        <img src="${imgUrl}" style="width:50px; height:50px; object-fit:contain; border-radius:4px; background:white;">
+        <div style="flex-grow:1;">
+            <div style="font-size:13px;">${item.name}</div>
+            <div style="font-size:12px; color:#aaa;">Rp${item.price.toLocaleString()} x ${item.quantity} = Rp${(item.price * item.quantity).toLocaleString()}</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <button onclick="changeQuantity(${index}, -1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 10px; font-size: 18px; font-weight: bold;">-</button>
+            <input type="text" inputmode="numeric" value="${item.quantity}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" onchange="updateQuantityFromInput(${index}, this.value)" class="no-spinner" style="width: 40px; background: #222; color: white; border: 1px solid #333; text-align: center; border-radius: 4px;">
+            <button onclick="changeQuantity(${index}, 1)" style="border:none; background:none; color:white; cursor:pointer; padding: 5px 10px; font-size: 18px; font-weight: bold;">+</button>
+        </div>
+      </div>`;
+  });
+  // 3. Update DOM sekali saja di akhir
+  list.innerHTML = htmlContent;
+  totalEl.innerText = "Total: Rp" + total.toLocaleString();
+}
+function changeQuantity(index, delta) {
+  cart[index].quantity += delta;
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
+  const totalQty = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const badge = document.getElementById('cart-badge');
+  badge.innerText = totalQty;
+  if (totalQty === 0) {
+    badge.style.display = 'none';
+    badge.style.display = 'none';
+    const icon = document.getElementById('cart-icon');
+    icon.classList.remove('blink-icon-active');
+    icon.style.stroke = 'white';
+  }
+  badge.classList.remove('blink-effect');
+  void badge.offsetWidth;
+  badge.classList.add('blink-effect');
+  renderCart();
+}
+function updateQuantityFromInput(index, value) {
+  const newVal = parseInt(value);
+  if (isNaN(newVal) || newVal <= 0) {
+    cart.splice(index, 1);
+  } else {
+    cart[index].quantity = newVal;
+  }
+  const totalQty = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const badge = document.getElementById('cart-badge');
+  badge.innerText = totalQty;
+  if (totalQty > 0) {
+    badge.style.display = 'flex';
+  } else {
+    badge.style.display = 'none';
+    badge.style.display = 'none';
+    const icon = document.getElementById('cart-icon');
+    icon.classList.remove('blink-icon-active');
+    icon.style.stroke = 'white';
+  }
+  renderCart();
+}
+function handleCheckout() {
+  const date = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+  let message = "\n\nTanggal: " + date + "\n\nPesanan:\n";
+  let total = 0;
+  cart.forEach(item => {
+    total += (item.price * item.quantity);
+    message += "- " + item.name + " (" + item.quantity + ") - Rp" + (item.price * item.quantity).toLocaleString() + "\n";
+  });
+  message += "\nTotal: Rp" + total.toLocaleString();
+  const url = "https://wa.me/6285846243884?text=" + encodeURIComponent(message);
+  window.open(url, '_blank');
+}
+document.addEventListener('click', function(event) {
+  const menu = document.getElementById('sort-menu');
+  const toggleBtn = document.querySelector('.sort-main-btn');
+  if (menu && !menu.contains(event.target) && !event.target.classList.contains('sort-main-btn')) {
+    menu.style.display = 'none'; document.getElementById('category-menu').style.display = 'none';
+  }
+});
+  </script>
+<div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+<div id="cart-sidebar" class="cart-sidebar">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h3>Keranjang</h3>
+    <button onclick="toggleCart()" style="background:none; border:none; color:white; cursor:pointer;">X</button>
+  </div>
+  <div id="cart-items-list"></div>
+  <div class="cart-total" id="cart-total">Total: Rp0</div>
+<button class="checkout-btn" onclick="handleCheckout()">Pesan</button>
+</div>
+<div style="position:fixed; bottom:20px; right:20px; z-index:998;"><button onclick="toggleCart()" style="background: rgba(0, 0, 0, 0.5); padding: 8px; cursor: pointer; border: 1px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center;"><svg id="cart-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="1" rx="2" ry="2"></rect><line x1="7" y1="9" x2="17" y2="9"></line><line x1="7" y1="15" x2="9" y2="15"></line><line x1="13" y1="15" x2="17" y2="15"></line></svg></button><span id="cart-badge" style="position:absolute; top:-5px; right:-5px; color:#ffffff; display:none; font-size:16px; font-weight:bold; padding: 0;">0</span></div>
 </body>
 </html>
